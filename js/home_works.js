@@ -16,20 +16,61 @@ gmail_button.onclick = () => {
 
 //2) Задача
 
-const childBlock = document.querySelector(".child_block")
+/* const childBlock = document.querySelector(".child_block")
 const parentBlock = document.querySelector(".parent_block")
 console.log(parentBlock);
 
 
 let moveX = 0
+let sizeD = parentBlock.clientWidth - childBlock.offsetWidth;
 let sizeX  = parentBlock.clientWidth - childBlock.offsetWidth;
+let moveY = 0;
 
 
 const moveBlock = () => {
     if (moveX < sizeX) {
         moveX++;
     childBlock.style.left = moveX   + 'px';
-        requestAnimationFrame(moveBlock)
+    childBlock.style.top = moveY + 'px';
+        requestAnimationFrame(moveBlock)    
+        
+    } else if (moveY < sizeD) {
+                requestAnimationFrame(moveBlock)    
+
+        moveY ++;
     }
 }
+moveBlock() */
+
+const childBlock = document.querySelector(".child_block")
+const parentBlock = document.querySelector(".parent_block")
+
+let moveX = 0
+let moveY = 0
+
+let sizeX = parentBlock.clientWidth - childBlock.offsetWidth
+let sizeY = parentBlock.clientHeight - childBlock.offsetHeight
+
+const moveBlock = () => {
+
+    if (moveX < sizeX && moveY === 0) {
+        moveX++
+        childBlock.style.left = moveX + "px"
+
+    } else if (moveY < sizeY && moveX === sizeX) {
+        moveY++
+        childBlock.style.top = moveY + "px"
+
+    } else if (moveX > 0 && moveY === sizeY) {
+        moveX--
+        childBlock.style.left = moveX + "px"
+
+    } else if (moveY > 0 && moveX === 0) {
+        moveY--
+        childBlock.style.top = moveY + "px"
+    }
+
+    requestAnimationFrame(moveBlock)
+}
+
 moveBlock()
