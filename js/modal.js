@@ -1,7 +1,6 @@
 const modal = document.querySelector(".modal")
 const closeBtn = document.querySelector(".modal_close")
 
-
 const openModal = () => {
     modal.style.display = "block";
 }
@@ -20,14 +19,12 @@ modal.onclick = () => {
     }
 }
 
-
 window.onscroll = () => {
     if (window.scrollY > 1000) {
         openModal()
         window.onscroll = null
     }
 }
-
 
 setTimeout(() => {
     openModal()
