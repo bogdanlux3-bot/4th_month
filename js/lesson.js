@@ -77,3 +77,69 @@ const converter = (element) => {
 converter(somInput);
 converter(usdInput);
 converter(eurInput);
+
+//ivent loop задачки на сосбесе
+const card = document.querySelector(".card");
+const btnNext = document.querySelector("#btn-next");
+const btnPrev = document.querySelector("#btn-prev");
+
+let cardId = 1;
+
+const BASE_URL = "https://jsonplaceholder.typicode.com/todos";
+
+const fetchTodos = () => {
+  fetch(`${BASE_URL}/${cardId}`)
+    .then((response) => {
+      if (response.status !== 200) {
+        card.style.color = "red";
+        card.innerHTML = "Произошла ошибка на сервере";
+      } else {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      const { id, title, completed } = data;
+
+      const color = completed ? "green" : "red";
+
+      card.style.borderColor = color;
+
+      card.innerHTML = `
+        <p>${id}</p>
+        <p>${title}</p>
+        <p style="color:${color}">
+          ${completed ? "Completed" : "Not Completed"}
+        </p>
+      `;
+    });
+};
+
+btnNext.onclick = () => {
+  cardId++;
+
+  if (cardId > 200) {
+    cardId = 1;
+  }
+
+  fetchTodos();
+};
+
+btnPrev.onclick = () => {
+  cardId--;
+
+  if (cardId < 1) {
+    cardId = 200;
+  }
+
+  fetchTodos();
+};
+
+fetchTodos();
+
+fetch("https://jsonplaceholder.typicode.com/posts")
+  .then((response) => response.json())
+  .then((data) => {
+    data.forEach((post) => {
+      console.log(post.title);
+    });
+  });
