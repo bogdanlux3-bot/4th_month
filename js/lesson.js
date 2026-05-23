@@ -79,6 +79,7 @@ converter(usdInput);
 converter(eurInput);
 
 //ivent loop задачки на сосбесе
+
 const card = document.querySelector(".card");
 const btnNext = document.querySelector("#btn-next");
 const btnPrev = document.querySelector("#btn-prev");
@@ -143,3 +144,38 @@ fetch("https://jsonplaceholder.typicode.com/posts")
       console.log(post.title);
     });
   });
+
+const cityInput = document.querySelector(".cityName");
+const searchBtn = document.querySelector("#search");
+const cityName = document.querySelector(".city");
+const tempName = document.querySelector(".temp");
+
+const BASE_URLL = 'https://api.openweathermap.org/data/2.5/weather';
+const API_KEY = '62e0af44e074068716864aabf4ac699f';
+
+    const fetchWatcher = async() => {
+      try{
+        const response = await fetch(`${BASE_URLL}?q=${cityInput.value}&units=metric&lang=ru&appid=${API_KEY}`)
+        const data = await response.json();
+
+         const { name, main: { temp } } = data;
+         cityName.innerHTML = name;
+         tempName.innerHTML = temp;
+      } catch (error) {
+        cityName.innerHTML = 'Произошла ошибка';
+        tempName.innerHTML = '';
+      }
+    }
+
+    searchBtn.addEventListener('click', () => {
+      if(cityInput.value !== '') {
+        fetchWatcher();
+      } else {
+         cityName.innerHTML = 'Введите название города';
+        tempName.innerHTML = '';
+      }
+      cityInput.value = ''
+
+    });
+
+    
